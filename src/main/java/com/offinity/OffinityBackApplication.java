@@ -1,4 +1,4 @@
-package com.offinity.demo;
+package com.offinity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

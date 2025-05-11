@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.offinity.mapper.EventMapper">
+
+	<select id="selectAllEvents" resultType="com.offinity.dto.EventDto">
+	    SELECT 
+	        event_id,
+	        title,
+	        description,
+	        start_date,
+	        end_date,
+	        start_time,
+	        end_time,
+	        is_all_day,
+	        type,
+	        location,
+	        created_by,
+	        created_at,
+	        updated_at
+	    FROM event
+	    ORDER BY start_date ASC
+	</select>
+
 	<select id="selectEventById" parameterType="long" resultType="com.offinity.dto.EventDto">
         SELECT 
             event_id,
@@ -49,4 +69,6 @@
             #{updatedAt}
         )
     </insert>
+    
+    
 </mapper>
