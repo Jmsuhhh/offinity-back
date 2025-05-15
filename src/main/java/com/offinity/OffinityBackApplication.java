@@ -1,4 +1,4 @@
-package com.offinity.demo;
+package com.offinity;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
