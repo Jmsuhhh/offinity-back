@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.offinity.demo.OffinityBackApplication;
+
 import com.offinity.dto.Approver;
 import com.offinity.dto.Employee;
 import com.offinity.dto.EmployeeDTO;
@@ -21,15 +21,14 @@ import com.offinity.mapper.LeaveMapper;
 @Service
 public class LeaveService {
 
-    private final OffinityBackApplication offinityBackApplication;
+
 
 //	생성자 주입
 	@Autowired
 	private LeaveMapper leaveMapper;
 	
-	public LeaveService(LeaveMapper leaveMapper, OffinityBackApplication offinityBackApplication) {
+	public LeaveService(LeaveMapper leaveMapper) {
 		this.leaveMapper = leaveMapper;
-		this.offinityBackApplication = offinityBackApplication;
 	}
 
 	public EmployeeDTO getEmployeeById(String employeeId) {
