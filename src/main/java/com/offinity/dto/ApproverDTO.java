@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Approver {
+public class ApproverDTO {
 
 	private String approverId;
 	private String approverName;
