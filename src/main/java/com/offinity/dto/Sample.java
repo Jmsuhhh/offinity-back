@@ -3,8 +3,8 @@ package com.offinity.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class Sample {
 	private String sampleColumn;
 }
