@@ -7,4 +7,9 @@ import lombok.Setter;
 @Setter
 public class SampleDto {
 	private String sampleColumn;
+
+	public void setSampleColumn(Object sampleColumn2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

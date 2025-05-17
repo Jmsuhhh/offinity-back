@@ -7,4 +7,9 @@ import lombok.Setter;
 @Setter
 public class Sample {
 	private String sampleColumn;
+
+	public Object getSampleColumn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
