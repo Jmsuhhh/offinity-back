@@ -2,6 +2,7 @@ package com.offinity.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +14,9 @@ import com.offinity.dto.EventDto;
 import com.offinity.service.EventService;
 
 // Callendar 표시할 이벤트를 저장/수정/삭제/조회하는 컨트롤러 담당자 : 이희정 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/api/event")
 public class EventController {
 	private final EventService eventService;
 
