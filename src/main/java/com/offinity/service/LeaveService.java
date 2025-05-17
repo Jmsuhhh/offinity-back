@@ -196,14 +196,15 @@ public class LeaveService {
         return result;
     }
 
-//  연차신청을 프론트ㅔ서 받아서 DB에 저장
+//  연차신청을 프론트에서 받아서 DB에 저장
 	public void postLeaveApply(String employeeId, LeaveApplyDTO ladto) {
 		
 		
 		Employee e = leaveMapper.selectEmployeeById(employeeId);	// 직원 정보 불러오기
 		
 //		연차 신청한 회수 계산
-		int count = leaveMapper.selectLeaveRequest(employeeId).size()+1;  // 연차 신청한 횟수를 카운트 함. 
+		int maxSeq = leaveMapper.findMaxRequestSeq(employeeId);  // 기존 최댓값
+	    String requestId = e.getEmployeeId() + "-" + String.format("%03d", maxSeq + 1);
 
 //		연차 신청한 정보를 연차신청현황에 저장
 		
@@ -215,7 +216,7 @@ public class LeaveService {
 
 	    // 연차 신청정보
 	    lr.setLeaveType(ladto.getLeaveType());
-	    lr.setRequestId(e.getEmployeeId()+"-"+String.format("%03d",count));
+	    lr.setRequestId(requestId);
 	    lr.setRequestDate(ladto.getRequestDate());
 	    lr.setStartDate(ladto.getStartDate());
 	    lr.setEndDate(ladto.getEndDate());

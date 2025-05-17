@@ -28,4 +28,6 @@ public interface LeaveMapper {
 
 	public List<LeaveApprovalDTO> selectPendingApprovalsByApprover(String approverId);
 
+	public int findMaxRequestSeq(String employeeId);
+
 }

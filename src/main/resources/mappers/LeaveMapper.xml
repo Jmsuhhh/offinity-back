@@ -112,6 +112,13 @@
       AND lr.approver_id = #{approverId}
 </select>
 
+<select id="findMaxRequestSeq" resultType="int">
+  SELECT
+    COALESCE(MAX(CAST(SUBSTRING_INDEX(request_id, '-', -1) AS UNSIGNED)), 0)
+  FROM leave_requests
+  WHERE employee_id = #{employeeId}
+</select>
+
 
 
 </mapper>
