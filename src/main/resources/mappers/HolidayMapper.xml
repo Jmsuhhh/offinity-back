@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.offinity.mapper.HolidayMapper">
+
+    <insert id="insertHoliday">
+        INSERT INTO holidays (name, date, weekday_ko)
+        VALUES (#{name}, #{date}, #{weekdayKo})
+    </insert>
+
+    <insert id="insertHolidays">
+        INSERT INTO holidays (name, date, weekday_ko)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name}, #{item.date}, #{item.weekdayKo})
+        </foreach>
+    </insert>
+
+    <select id="selectAllHolidays" resultType="com.offinity.dto.Holiday">
+        SELECT id, name, date, weekday_ko
+        FROM holidays
+        ORDER BY date ASC
+    </select>
+
+</mapper>

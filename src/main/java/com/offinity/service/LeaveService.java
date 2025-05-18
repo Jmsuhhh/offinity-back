@@ -8,11 +8,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.offinity.dto.Approver;
+import com.offinity.OffinityBackApplication;
+import com.offinity.controller.EventController;
+import com.offinity.dto.ApproverDTO;
 import com.offinity.dto.Employee;
 import com.offinity.dto.EmployeeDTO;
 import com.offinity.dto.LeaveApplyDTO;
+import com.offinity.dto.LeaveApprovalDTO;
+import com.offinity.dto.LeaveConfirmDTO;
 import com.offinity.dto.LeaveRequest;
 import com.offinity.dto.LeaveRequestDTO;
 import com.offinity.dto.LeaveSummaryDTO;
@@ -21,16 +24,25 @@ import com.offinity.mapper.LeaveMapper;
 @Service
 public class LeaveService {
 
+    private final EventController eventController;
+
+    private final OffinityBackApplication offinityBackApplication;
+
 
 
 //	생성자 주입
 	@Autowired
 	private LeaveMapper leaveMapper;
 	
-	public LeaveService(LeaveMapper leaveMapper) {
+	public LeaveService(LeaveMapper leaveMapper, OffinityBackApplication offinityBackApplication, EventController eventController) {
 		this.leaveMapper = leaveMapper;
+		this.offinityBackApplication = offinityBackApplication;
+		this.eventController = eventController;
 	}
 
+	
+//	직원 정보를 employeeId로 불러와서 프론트로 전달
+	
 	public EmployeeDTO getEmployeeById(String employeeId) {
 	
 		Employee e = leaveMapper.selectEmployeeById(employeeId);
@@ -58,6 +70,8 @@ public class LeaveService {
 		return dto;
 	}
 
+//	직원 연차 현황을 요약해서 프론트로 전달
+	
 	public LeaveSummaryDTO getLeaveSummary(String employeeId) {
 
 		Employee e = leaveMapper.selectEmployeeById(employeeId);	// 직원 정보를 e에 담아줌.
@@ -81,6 +95,8 @@ public class LeaveService {
 		return lsdto;
 	}
 
+//	연차 신청현황을 읽어서 프론트로 전달
+	
 	public List<LeaveRequestDTO> getLeaveRequest(String employeeId) {
 		
 		List<LeaveRequest> lr = leaveMapper.selectLeaveRequest(employeeId);
@@ -154,6 +170,7 @@ public class LeaveService {
 	    return Math.min(15 + Math.max(extra, 0), 25);
 	}
 	
+//	사용한 연차 계산
     public Double calculateUsedLeave(List<LeaveRequest> requests) {
         // 1. null 또는 비어있는 리스트이면 0.0 반환
         if (requests == null || requests.isEmpty()) {
@@ -169,7 +186,7 @@ public class LeaveService {
         
         Double result = 0.0;
 		for(LeaveRequest leave : requests) {
-			if(leave.getStatus().equals("APPROVED")) {
+			if(leave.getStatus().equals("APPROVED")) {			// 결재자가 승인한 건만 계산
 				if(leave.getEndDate().isBefore(LocalDate.now())) {
 					result += leave.getLeaveDays();
 				}
@@ -179,14 +196,15 @@ public class LeaveService {
         return result;
     }
 
-    
+//  연차신청을 프론트에서 받아서 DB에 저장
 	public void postLeaveApply(String employeeId, LeaveApplyDTO ladto) {
 		
 		
 		Employee e = leaveMapper.selectEmployeeById(employeeId);	// 직원 정보 불러오기
 		
 //		연차 신청한 회수 계산
-		int count = leaveMapper.selectLeaveRequest(employeeId).size()+1;  // 연차 신청한 횟수를 카운트 함. 
+		int maxSeq = leaveMapper.findMaxRequestSeq(employeeId);  // 기존 최댓값
+	    String requestId = e.getEmployeeId() + "-" + String.format("%03d", maxSeq + 1);
 
 //		연차 신청한 정보를 연차신청현황에 저장
 		
@@ -198,7 +216,7 @@ public class LeaveService {
 
 	    // 연차 신청정보
 	    lr.setLeaveType(ladto.getLeaveType());
-	    lr.setRequestId(e.getEmployeeId()+"-"+String.format("%03d",count));
+	    lr.setRequestId(requestId);
 	    lr.setRequestDate(ladto.getRequestDate());
 	    lr.setStartDate(ladto.getStartDate());
 	    lr.setEndDate(ladto.getEndDate());
@@ -216,19 +234,21 @@ public class LeaveService {
 		
 	}
 
-	public List<Approver> getLeaveApprover(String employeeId) {
+	
+//	employeeId의 부서 결재자 정보를 읽어서 프론트로 전달
+	public List<ApproverDTO> getLeaveApprover(String employeeId) {
 		
 //		같은 부서 부서장 이름 불러오기
 		Employee e = leaveMapper.selectEmployeeById(employeeId);	// 직원 정보 불러오기
 		List<Employee> le = leaveMapper.getEmployeeByDepartment(e.getEmployeeDepartment());
 																	// 직원 부서원 직원 정보들을 불러오기
-		List<Approver> approver = new ArrayList<>();		// 부서 결재권자, 여러명이 있는 경우 List로 저장
+		List<ApproverDTO> approver = new ArrayList<>();		// 부서 결재권자, 여러명이 있는 경우 List로 저장
 		
 		System.out.println("결재자 정보");
 		
 		for(Employee eTEMP : le) {
 			if(eTEMP.getEmployeeGrade().equals("부장") || eTEMP.getEmployeeGrade().equals("과장")) {
-				Approver aTEMP = new Approver();
+				ApproverDTO aTEMP = new ApproverDTO();
 				aTEMP.setApproverId(eTEMP.getEmployeeId());
 				aTEMP.setApproverName(eTEMP.getEmployeeName());
 				approver.add(aTEMP);
@@ -239,7 +259,7 @@ public class LeaveService {
 		return approver;
 	}
 
-
+//	프론트에서 수정요청한 것으로 DB 수정
 	public void updateLeaveRequest(String requestId, LeaveRequestDTO u) {
 	    
 		if (u == null) {
@@ -285,7 +305,37 @@ public class LeaveService {
 		System.out.println("연차신청 내용 취소");
 	    leaveMapper.deleteLeaveRequest(requestId);
 	}
-	
+
+
+	public void updateApproval(String requestId, LeaveConfirmDTO lcDTO) {
+
+		LeaveRequest ula = new LeaveRequest();		// Update Leave by Approval 
+		ula.setRequestId(requestId);
+		ula.setStatus(lcDTO.getStatus());
+		ula.setApprovalComment(lcDTO.getApprovalComment());
+		ula.setUpdatable(false);     // 결재 후 수정 불가
+		ula.setCancellable(false);   // 결재 후 취소 불가
+
+		leaveMapper.updateLeaveApproval(ula);
+	}
+
+	public List<LeaveApprovalDTO> getPendingApprovals(String approverId) {
+		
+		List<LeaveApprovalDTO> dto = leaveMapper.selectPendingApprovalsByApprover(approverId);
+
+		
+		System.out.println("결재자 정보를 불러옴");
+		System.out.println(approverId);
+		
+		
+		if(dto == null) {
+			System.out.println("데이터가 없음2");
+			return null;
+		}
+		
+		return dto;
+	}
+
 	
 }
 

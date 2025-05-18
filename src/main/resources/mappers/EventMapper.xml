@@ -51,9 +51,7 @@
             is_all_day,
             type,
             location,
-            created_by,
-            created_at,
-            updated_at
+            created_by
         ) VALUES (
             #{title},
             #{description},
@@ -64,9 +62,7 @@
             #{isAllDay},
             #{type},
             #{location},
-            #{createdBy},
-            #{createdAt},
-            #{updatedAt}
+            #{createdBy}
         )
     </insert>
     

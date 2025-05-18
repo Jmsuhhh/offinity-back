@@ -86,6 +86,41 @@
 </delete>
 
 
+<update id="updateLeaveApproval" parameterType="com.offinity.dto.LeaveRequest">
+    UPDATE leave_requests
+    SET
+        status = #{status},
+        approval_comment = #{approvalComment},
+        updatable = false,
+        cancellable = false
+    WHERE request_id = #{requestId}
+</update>
+
+<select id="selectPendingApprovalsByApprover" resultType="com.offinity.dto.LeaveApprovalDTO">
+    SELECT lr.request_id,
+           ei.employee_name,
+           ei.employee_grade,
+           lr.request_date,
+           lr.start_date,
+           lr.end_date,
+           lr.leave_days,
+           lr.reason,
+           lr.approval_comment
+    FROM leave_requests lr
+    JOIN employee_info ei ON lr.employee_id = ei.employee_id
+    WHERE lr.status = 'PENDING'
+      AND lr.approver_id = #{approverId}
+</select>
+
+<select id="findMaxRequestSeq" resultType="int">
+  SELECT
+    COALESCE(MAX(CAST(SUBSTRING_INDEX(request_id, '-', -1) AS UNSIGNED)), 0)
+  FROM leave_requests
+  WHERE employee_id = #{employeeId}
+</select>
+
+
+
 </mapper>
 
 
