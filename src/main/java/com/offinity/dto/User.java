@@ -11,6 +11,8 @@ public class User { // 내부 DB와 소통
 	private String userName;
 	private String userEmail;
 	private String userPassword;
+	private String userSecurityQuestion;
+	private String userSecurityAnswer;
 	private String userRole;
 
 }

@@ -44,10 +44,45 @@ public class UserService {
 		
 		user.setUserPassword(encoder.encode(userDto.getUserPassword()));
 		
+		user.setUserSecurityQuestion(userDto.getUserSecurityQuestion());
+		user.setUserSecurityAnswer(userDto.getUserSecurityAnswer());
+		
 		user.setUserRole("ROLE_USER");
 		
 		userMapper.createUser(user);
 	
+	}
+	
+	public boolean isUserExist(String name) {
+		Integer res = userMapper.isUserExist(name);
+		if (res > 0) {
+			return true;
+		}
+		else 
+			return false;
+		
+	}
+	
+	public String findEmailProcess(UserDTO userDto) {
+		
+		if (!isUserExist(userDto.getUserName())) {
+			System.out.println("존재하지 않는 사용자입니다.");
+			return null;
+		}
+		else {
+			
+			User user = userMapper.getUserByName(userDto.getUserName());
+			
+			if (user.getUserSecurityQuestion().equals(userDto.getUserSecurityQuestion()) &&
+		            user.getUserSecurityAnswer().equals(userDto.getUserSecurityAnswer())) {
+				return user.getUserEmail();
+			} else {
+				System.out.println("본인 확인에 실패했습니다.");
+				return null;
+			}
+			
+			
+		}
 	}
 
 }

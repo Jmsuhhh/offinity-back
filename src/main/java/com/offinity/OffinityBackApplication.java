@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication
+@SpringBootApplication (scanBasePackages = {"com.offinity"})
 @MapperScan("com.offinity.mapper")
 
 public class OffinityBackApplication {

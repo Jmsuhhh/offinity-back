@@ -8,14 +8,26 @@
 	</select>
 	
 	<insert id="createUser" parameterType="com.offinity.dto.User">
-		INSERT INTO offinity_user (user_id, user_name, user_email, user_password, user_role)
-		VALUES (#{userId}, #{userName}, #{userEmail}, #{userPassword}, #{userRole});
+		INSERT INTO offinity_user (user_id, user_name, user_email, user_password, user_security_question, user_security_answer, user_role)
+		VALUES (#{userId}, #{userName}, #{userEmail}, #{userPassword}, #{userSecurityQuestion}, #{userSecurityAnswer}, #{userRole});
 	</insert>
+	
+	<select id="isUserExist" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM offinity_user
+		WHERE user_name = #{userName};
+	</select>
 	
 	<select id="getUserByEmail" parameterType="String" resultType="com.offinity.dto.User">
 		SELECT *
 		FROM offinity_user
 		WHERE user_email = #{userEmail};
+	</select>
+	
+	<select id="getUserByName" parameterType="String" resultType="com.offinity.dto.User">
+		SELECT *
+		FROM offinity_user
+		WHERE user_name = #{userName};
 	</select>
 	
 	
