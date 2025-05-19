@@ -47,7 +47,7 @@ public class UserService {
 		user.setUserSecurityQuestion(userDto.getUserSecurityQuestion());
 		user.setUserSecurityAnswer(userDto.getUserSecurityAnswer());
 		
-		user.setUserRole("ROLE_USER");
+		user.setUserRole("ROLE_ADMIN");
 		
 		userMapper.createUser(user);
 	
