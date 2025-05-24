@@ -1,5 +1,6 @@
 package com.offinity.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -52,17 +53,14 @@ public class SecurityConfig {
 			// 어디로부터 들어오는 요청을 허용할 것인지
 			// VUE의 포트번호를 입력
 			config.setAllowedOrigins(Collections.singletonList("http://localhost:8002"));
-			         
 			// 어떤 요청방식에 대해 허용할 것인지
 			// GET, DELETE, ...
 			config.setAllowedMethods(Collections.singletonList("*")); // <-- 모든 요청 허용
-			         
 			// 쿠키를 전달 받을 것인지 설정
 			config.setAllowCredentials(true);
 			         
 			// Header 설정 허용 여부
 			config.setAllowedHeaders(Collections.singletonList("*"));
-			         
 			// 브라우저가 닫혀도 쿠키가 메모리에 남아있는 시간 설정
 			config.setMaxAge(3600L); // <-- 1시간
 			         
@@ -78,7 +76,11 @@ public class SecurityConfig {
 		http.formLogin((auth) -> auth.disable());
 		
 		// 요청에 대한 권한 확인
+<<<<<<< HEAD
 		http.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/api/login", "/api/signup", "/api/img/**", "/api/find-email").permitAll()
+=======
+		http.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/api/login", "/api/signup", "/api/img/**", "/api/event/**", "/api/holidays", "/api/calendar/**").permitAll()
+>>>>>>> eb9ce6a (이벤트)
 				.anyRequest().authenticated()
 			);
 		
