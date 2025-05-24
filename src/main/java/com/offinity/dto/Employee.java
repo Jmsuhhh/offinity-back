@@ -21,5 +21,10 @@ public class Employee {
     private String employeeAddress;
     private String employeeContact;
     private String employeeEmail;
+    private String employeePhoneNumber;
+    private String employeePostion;
+    //폰넘버
+    //직책
+    
 
 }

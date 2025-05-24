@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offinity.mapper.EmpolyeeListMapper">
+	<select id="selectAllEvents" resultType="com.offinity.dto.EmployeeDto">
+	    SELECT 
+		    employee_id,
+    		name,
+    		department,
+    		position,
+    		email,
+    		phone_number,
+    		created_at
+	    	FROM empolyee_directory
+	    	ORDER BY start_date ASC
+	</select>
+</mapper>
