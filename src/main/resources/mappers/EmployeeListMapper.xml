@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.offinity.mapper.EmpolyeeListMapper">
+<mapper namespace="com.offinity.mapper.EmployeeListMapper">
 	<select id="selectAllEvents" resultType="com.offinity.dto.EmployeeDto">
 	    SELECT 
 		    employee_id,

@@ -23,8 +23,7 @@ public class Employee {
     private String employeeEmail;
     private String employeePhoneNumber;
     private String employeePostion;
-    //폰넘버
-    //직책
+
     
 
 }
