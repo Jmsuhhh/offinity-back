@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.offinity.dto.EmployeeDTO;
 
 @Mapper
-public interface EmpolyeeListMapper {
+public interface EmployeeListMapper {
 	 /**
      * 필터 및 정렬, 페이징 조건에 맞는 직원 목록을 조회합니다.
      */

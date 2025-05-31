@@ -6,14 +6,20 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.offinity.dto.EmployeeDTO;
+import com.offinity.mapper.EmployeeListMapper;
 import com.offinity.mapper.EmpolyeeListMapper;
 import com.offinity.service.EmployeeListService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequestMapping("/api/employees")
 @RestController
+@RequiredArgsConstructor
 public class EmployeeListController {
 	 private final EmployeeListService employListService;
 
@@ -25,12 +31,12 @@ public class EmployeeListController {
 	        int offset = (page - 1) * size;
 
 	        // 직원 목록 조회
-	        List<EmployeeDTO> employees = EmpolyeeListMapper.selectEmployees(
+	        List<EmployeeDTO> employees = EmployeeListMapper.selectEmployees(
 	                name, department, position, sortField, sortDir, size, offset
 	        );
 
 	        // 전체 직원 수 조회
-	        int totalCount = EmpolyeeListMapper.countEmployees(name, department, position);
+	        int totalCount = EmployeeListMapper.countEmployees(name, department, position);
 
 	        // 결과 데이터 구성
 	        Map<String, Object> result = new HashMap<>();
