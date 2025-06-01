@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.offinity.mapper.SuggestionBoardCommentMapper">
+
+	<resultMap id="SuggestionBoardCommentMap" type="com.offinity.dto.SuggestionBoardComment">
+	    <id property="commentId" column="COMMENT_ID"/>
+	    <result property="postId" column="POST_ID"/>
+	    <result property="content" column="CONTENT"/>
+	    <result property="createdAt" column="CREATED_AT"/>
+	    <result property="updatedAt" column="UPDATED_AT"/>
+	</resultMap>
+
+    <!-- 게시글에 달린 전체 댓글 조회 -->
+    <select id="getCommentListByPostId" parameterType="Long" resultMap="SuggestionBoardCommentMap">
+		SELECT COMMENT_ID, POST_ID, CONTENT, CREATED_AT, UPDATED_AT 
+		FROM SUGGESTION_BOARD_COMMENT
+		WHERE POST_ID = #{postId}
+		ORDER BY COMMENT_ID
+    </select>
+    
+    <!-- 단일 댓글 조회 -->
+	<select id="getCommentById" parameterType="Long" resultMap="SuggestionBoardCommentMap">
+		SELECT COMMENT_ID, POST_ID, CONTENT, CREATED_AT, UPDATED_AT 
+		FROM SUGGESTION_BOARD_COMMENT
+		WHERE COMMENT_ID = #{commentId}
+	</select>
+
+    <!-- 댓글 삽입 -->
+	<insert id="insertComment" parameterType="com.offinity.dto.SuggestionBoardComment">
+	    INSERT INTO SUGGESTION_BOARD_COMMENT (
+	        POST_ID, CONTENT, CREATED_AT, UPDATED_AT
+	    ) VALUES (
+			#{postId}, #{content}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+	    )
+	</insert>
+
+    <!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="com.offinity.dto.SuggestionBoard">
+		UPDATE SUGGESTION_BOARD_COMMENT
+		SET
+			CONTENT = #{content},
+		    UPDATED_AT = CURRENT_TIMESTAMP
+		WHERE COMMENT_ID = #{commentId}
+	</update>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="Long">
+		DELETE FROM SUGGESTION_BOARD_COMMENT
+		WHERE COMMENT_ID = #{commentId}
+    </delete>
+
+</mapper>
