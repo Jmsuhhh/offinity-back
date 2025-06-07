@@ -25,6 +25,9 @@ public class SuggestionBoardService {
 
     // 게시글 상세 조회
     public SuggestionBoard findById(Long postId) {
+    	// 조회수 증가 로직
+    	suggestionBoardMapper.increaseViews(postId);
+    	
         return suggestionBoardMapper.findById(postId);
     }
 

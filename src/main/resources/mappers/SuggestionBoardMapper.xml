@@ -52,6 +52,13 @@
 	    )
     </insert>
 
+	  <!-- 조회수 증가 -->
+  <update id="increaseViews" parameterType="Long">
+    UPDATE suggestion_board
+    SET views = views + 1
+    WHERE post_id = #{postId}
+  </update>
+
     <!-- 게시글 수정 -->
 	<update id="updateSuggestion" parameterType="com.offinity.dto.SuggestionBoard">
 	    UPDATE SUGGESTION_BOARD

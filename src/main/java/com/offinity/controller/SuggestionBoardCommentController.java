@@ -18,7 +18,7 @@ public class SuggestionBoardCommentController {
 
     // 특정 건의글(postId)에 대한 댓글 전체 조회
     @GetMapping("/{postId}")
-    public List<SuggestionBoardComment> getCommentsByPostId(@PathVariable Long postId) {
+    public List<SuggestionBoardComment> getCommentsByPostId(@PathVariable(name = "postId") Long postId) {
         return commentService.getCommentListByPostId(postId);
     }
 
@@ -30,14 +30,14 @@ public class SuggestionBoardCommentController {
 
     // 댓글 수정
     @PutMapping("/{commentId}")
-    public void updateComment(@PathVariable Long commentId, @RequestBody SuggestionBoardComment comment) {
+    public void updateComment(@PathVariable(name = "commentId") Long commentId, @RequestBody SuggestionBoardComment comment) {
         comment.setCommentId(commentId);
         commentService.updateComment(comment);
     }
 
     // 댓글 삭제
     @DeleteMapping("/{commentId}")
-    public void deleteComment(@PathVariable Long commentId) {
+    public void deleteComment(@PathVariable(name = "commentId") Long commentId) {
         commentService.deleteComment(commentId);
     }
 }

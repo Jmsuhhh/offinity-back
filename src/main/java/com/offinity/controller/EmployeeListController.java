@@ -29,13 +29,13 @@ public class EmployeeListController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getEmployees(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String department,
-            @RequestParam(required = false) String position,
-            @RequestParam(defaultValue = "employee_id") String sortField,
-            @RequestParam(defaultValue = "asc") String sortDir,
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(value ="name", required = false) String name,
+            @RequestParam(value ="department",required = false) String department,
+            @RequestParam(value ="position",required = false) String position,
+            @RequestParam(value ="sort-field",defaultValue = "employee_id") String sortField,
+            @RequestParam(value ="sort-dir",defaultValue = "asc") String sortDir,
+            @RequestParam(value ="page",defaultValue = "1") int page,
+            @RequestParam(value ="size",defaultValue = "10") int size
     ) {
         // page, size만 넘기고 서비스가 내부에서 offset 계산
         Map<String, Object> result = employeeListService.getEmployees(

@@ -38,7 +38,9 @@ public class CalendarController {
         List<HolidayDto> holidays = holidayService.getHolidays(year, month); 
 //        List<EventDto> events = eventService.getAllEvents(); 
         List<EventDto> events = null;
-        if (user != null) { events = eventService.getAllEvents();
+        System.out.println("user : " + user);
+        if (user != null) { 
+        	events = eventService.getAllEvents();
         }
         
         Map<String, Object> response = new HashMap<>();

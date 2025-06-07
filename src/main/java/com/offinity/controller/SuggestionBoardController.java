@@ -37,6 +37,7 @@ public class SuggestionBoardController {
     // 게시글 상세 조회
     @GetMapping("/{postId}")
     public SuggestionBoard findById(@PathVariable(name = "postId") Long postId) {
+
         return suggestionBoardService.findById(postId);
     }
 
