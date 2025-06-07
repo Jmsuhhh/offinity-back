@@ -12,6 +12,9 @@ public interface SuggestionBoardMapper {
     // 전체 게시글 목록 조회
     List<SuggestionBoard> findAll();
 
+    //게시글 조회수 증가
+    void increaseViews(Long postId);
+    
     // 게시글 상세 조회
     SuggestionBoard findById(Long postId);
 

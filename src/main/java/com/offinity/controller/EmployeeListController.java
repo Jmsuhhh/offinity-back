@@ -33,6 +33,7 @@ public class EmployeeListController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getEmployees(
+
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "department",required = false) String department,
             @RequestParam(value = "position",required = false) String position,
@@ -40,6 +41,7 @@ public class EmployeeListController {
             @RequestParam(value = "sort-dir",defaultValue = "asc") String sortDir,
             @RequestParam(value = "page",defaultValue = "1") int page,
             @RequestParam(value = "size",defaultValue = "10") int size
+
     ) {
         // page, size만 넘기고 서비스가 내부에서 offset 계산
         Map<String, Object> result = employeeListService.getEmployees(

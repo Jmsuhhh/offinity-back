@@ -36,7 +36,8 @@ public class SuggestionBoardController {
 
     // 게시글 상세 조회
     @GetMapping("/{postId}")
-    public SuggestionBoard findById(@PathVariable Long postId) {
+    public SuggestionBoard findById(@PathVariable(name = "postId") Long postId) {
+
         return suggestionBoardService.findById(postId);
     }
 
@@ -48,14 +49,14 @@ public class SuggestionBoardController {
 
     // 게시글 수정
     @PutMapping("/{postId}")
-    public void updateSuggestion(@PathVariable Long postId, @RequestBody SuggestionBoard post) {
+    public void updateSuggestion(@PathVariable(name = "postId") Long postId, @RequestBody SuggestionBoard post) {
         post.setPostId(postId);
         suggestionBoardService.updateSuggestion(post);
     }
 
     // 게시글 삭제
     @DeleteMapping("/{postId}")
-    public void deleteSuggestion(@PathVariable Long postId) {
+    public void deleteSuggestion(@PathVariable(name = "postId") Long postId) {
         suggestionBoardService.deleteSuggestion(postId);
     }
 }
