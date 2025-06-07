@@ -6,13 +6,31 @@
     employee_id,
     name        AS employeeName,
     department  AS employeeDepartment,
-    position    AS employeePostion,
+    position    AS employeePosition,
     email       AS employeeEmail,
     phone_number AS employeePhoneNumber,
     created_at  AS employeeDateOfJoin
   FROM employee_directory
   ORDER BY created_at ASC
 </select>
+
+
+  <!-- 2) 전체 직원 수 조회 -->
+ <select id="countEmployees" resultType="int">
+    SELECT COUNT(*)
+    FROM employee_directory
+    <where>
+      <if test="name != null and name != ''">
+        AND name LIKE CONCAT('%', #{name}, '%')
+      </if>
+      <if test="department != null and department != ''">
+        AND department LIKE CONCAT('%', #{department}, '%')
+      </if>
+      <if test="position != null and position != ''">
+        AND position LIKE CONCAT('%', #{position}, '%')
+      </if>
+    </where>
+  </select>
 	
 	  <!-- 직원 정보 수정 -->
   <update id="updateEmployee" parameterType="com.offinity.dto.EmployeeDTO">
@@ -20,7 +38,7 @@
     SET
       name        = #{employeeName},
       department  = #{employeeDepartment},
-      position    = #{employeePostion},
+      position    = #{employeePosition},
       email       = #{employeeEmail},
       phone_number= #{employeePhoneNumber}
     WHERE employee_id = #{employeeId}

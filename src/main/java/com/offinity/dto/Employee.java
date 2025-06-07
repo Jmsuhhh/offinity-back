@@ -22,7 +22,7 @@ public class Employee {
     private String employeeContact;
     private String employeeEmail;
     private String employeePhoneNumber;
-    private String employeePostion;
+    private String employeePosition;
 
     
 
