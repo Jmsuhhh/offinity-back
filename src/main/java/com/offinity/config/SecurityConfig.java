@@ -78,7 +78,7 @@ public class SecurityConfig {
 		http.formLogin((auth) -> auth.disable());
 		
 		// 요청에 대한 권한 확인
-		http.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/api/login", "/api/signup", "/api/img/**", "/api/find-email").permitAll()
+		http.authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/api/login", "/api/signup", "/api/img/**", "/api/find-email", "/api/notice", "/api/notice/**").permitAll()
 				.anyRequest().authenticated()
 			);
 		

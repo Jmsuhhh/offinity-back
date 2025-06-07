@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offinity.mapper.NoticeMapper">
+	
+	<select id="selectNotice" parameterType="String" resultType="com.offinity.dto.Notice">
+		SELECT *
+		FROM offinity_notice;
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND title LIKE CONCAT('%', #{keyword}, '%');
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectNoticeById" parameterType="Integer" resultType="com.offinity.dto.Notice">
+		SELECT *
+		FROM offinity_notice
+		WHERE notice_id = #{noticeId};
+	</select>
+	
+	<insert id="insertNotice" parameterType="com.offinity.dto.Notice">
+		INSERT INTO offinity_notice (writer, title, content, create_date, update_date)
+		VALUES (#{writer}, #{title}, #{content}, #{createDate}, #{updateDate});
+	</insert>
+	
+	<update id="updateNotice" parameterType="com.offinity.dto.Notice">
+		UPDATE offinity_notice
+		SET title = #{title}, content = #{content}, update_date = #{updateDate}
+		WHERE notice_id = #{noticeId};
+	</update>
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE 
+		FROM offinity_notice
+		WHERE notice_id = #{noticeId};
+	</delete>
+	
+	
+</mapper>
