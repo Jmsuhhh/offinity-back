@@ -34,9 +34,21 @@
     <!-- user_id는 임시적으로 1로 고정값으로 지정했습니다-->
     <insert id="insertSuggestion" parameterType="com.offinity.dto.SuggestionBoard" useGeneratedKeys="true" keyProperty="postId">
 	    INSERT INTO SUGGESTION_BOARD (
-	        TITLE, CONTENT, CREATED_AT, USER_ID
+	        TITLE, 
+	        CONTENT, 
+	        VIEWS, 
+	        VISIBLE, 
+	        CREATED_AT, 
+	        UPDATED_AT, 
+	        USER_ID
 	    ) VALUES (
-			#{title}, #{content}, CURRENT_TIMESTAMP, 1
+			#{title}, 
+			#{content}, 
+			#{views}, 
+			#{visible}, 
+			#{createdAt}, 
+			#{updatedAt}, 
+			#{userId}
 	    )
     </insert>
 
