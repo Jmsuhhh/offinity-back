@@ -36,16 +36,16 @@ public class EmployeeListController {
 
 		int offset = (page - 1) * size;
 
-		List<EmployeeDTO> employees = employListService.getEmployees(
-				name, department, position, sortField, sortDir, size, offset);
+//		List<EmployeeDTO> employees = employListService.getEmployees(
+//				name, department, position, sortField, sortDir, size, offset);
 
-		int totalCount = employListService.countEmployees(name, department, position);
-
+//		int totalCount = employListService.countEmployees(name, department, position);
+//
 		Map<String, Object> result = new HashMap<>();
-		result.put("employees", employees);
-		result.put("totalCount", totalCount);
-		result.put("totalPages", (int) Math.ceil((double) totalCount / size));
-
+//		result.put("employees", employees);
+//		result.put("totalCount", totalCount);
+//		result.put("totalPages", (int) Math.ceil((double) totalCount / size));
+//
 		return ResponseEntity.ok(result);
 	}
 }
