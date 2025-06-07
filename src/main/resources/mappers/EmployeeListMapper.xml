@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.offinity.mapper.EmployeeListMapper">
+<select id="selectEmployees" resultType="com.offinity.dto.EmployeeDTO">
+  SELECT
+    employee_id,
+    name        AS employeeName,
+    department  AS employeeDepartment,
+    position    AS employeePostion,
+    email       AS employeeEmail,
+    phone_number AS employeePhoneNumber,
+    created_at  AS employeeDateOfJoin
+  FROM employee_directory
+  ORDER BY created_at ASC
+</select>
+	
+	  <!-- 직원 정보 수정 -->
+  <update id="updateEmployee" parameterType="com.offinity.dto.EmployeeDTO">
+    UPDATE employee_directory
+    SET
+      name        = #{employeeName},
+      department  = #{employeeDepartment},
+      position    = #{employeePostion},
+      email       = #{employeeEmail},
+      phone_number= #{employeePhoneNumber}
+    WHERE employee_id = #{employeeId}
+  </update>
+
+  <!-- 직원 삭제 -->
+  <delete id="deleteEmployee" parameterType="string">
+    DELETE FROM employee_directory
+    WHERE employee_id = #{id}
+  </delete>
+
+</mapper>

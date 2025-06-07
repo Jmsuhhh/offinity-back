@@ -25,6 +25,10 @@ public class EventService {
 	}
 
 	public void createEvent(EventDto event) {
+		System.out.println("check");
 		eventMapper.insertEvent(event);
+	}
+	public void deleteEvent(Long id) {
+	    eventMapper.deleteEvent(id);
 	}
 }

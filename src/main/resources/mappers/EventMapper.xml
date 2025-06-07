@@ -66,5 +66,8 @@
         )
     </insert>
     
+    <delete id="deleteEvent" parameterType="long">
+        DELETE FROM event WHERE event_id = #{id}
+	</delete>
     
 </mapper>

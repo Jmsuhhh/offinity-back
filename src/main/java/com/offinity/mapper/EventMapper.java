@@ -11,5 +11,6 @@ public interface EventMapper {
     EventDto selectEventById(Long id);
     void insertEvent(EventDto event);
     List<EventDto> selectAllEvents();
+    void deleteEvent(Long id);
 
 }

@@ -19,8 +19,7 @@ public class CorsMvcConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 			.allowedOrigins("http://localhost:8002")
 	        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-	        .allowedHeaders("*")
-	        .allowCredentials(true);  // 필요한 경우: 세션, 쿠키 포함 요청 시
+	        .allowedHeaders("*");  // 필요한 경우: 세션, 쿠키 포함 요청 시
    
 //   addMapping("/**")   애플리케이션의 모든 URL 경로에 대해 CORS 정책을 적용
 //   allowedOrigins("http://localhost:8002")   해당 출처(origin)에서 오는 요청만 허용. 
