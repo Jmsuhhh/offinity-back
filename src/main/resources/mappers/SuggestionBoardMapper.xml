@@ -44,7 +44,7 @@
 	    ) VALUES (
 			#{title}, 
 			#{content}, 
-			#{views}, 
+			0, 
 			#{visible}, 
 			#{createdAt}, 
 			#{updatedAt}, 
